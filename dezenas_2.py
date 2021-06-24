@@ -1,0 +1,5 @@
+n_inteiro = int((input("Digite um número inteiro: ")))
+dezena_1 = int(n_inteiro % 100)
+dezena_2 = int(dezena_1/10)
+resultado = str(dezena_2)
+print("O dígito das dezenas é " + resultado)
