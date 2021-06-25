@@ -17,5 +17,5 @@ dias_str = str(dias)
 minutos_str = str(minutos)
 segundos_str = str(segundos_restantes_final)
 
-print(dias_str + " dias " + horas_str + " horas, " + minutos_str +
+print(dias_str + " dias, " + horas_str + " horas, " + minutos_str +
       " minutos e " + segundos_str + " segundos. ")
