@@ -1,100 +1,106 @@
-tipo_jogo = 0
-
-
 def computador_escolhe_jogada(n, m):
+    computadorRemove = 1
 
-    print("Vez do computador!")
-    if n <= m:
-        return n
+    while computadorRemove != m:
+        if (n - computadorRemove) % (m+1) == 0:
+            return computadorRemove
 
-    else:
-        quantia = n % (m+1)
-        if quantia > 0:
-            return quantia
+        else:
+            computadorRemove += 1
 
-        return m
+    return computadorRemove
 
 
 def usuario_escolhe_jogada(n, m):
+    jogadaValida = False
 
-    print("Sua vez!\n")
-    jogada = 0
+    while not jogadaValida:
+        jogadorRemove = int(input('Quantas peças você vai tirar? '))
+        if jogadorRemove > m or jogadorRemove < 1:
+            print()
+            print('Oops! Jogada inválida! Tente de novo.')
+            print()
 
-    while jogada == 0:
-        jogada = int(input("Quantas peças irá tirar? "))
-
-        if jogada > n or jogada < 1 or jogada > m:
-            jogada = 0
-
-    return jogada
-
-
-def partida():
-
-    print(" ")
-    n = int(input("Quantas peças? "))
-    m = int(input("Limite de peças por jogada? "))
-
-    is_computer_turn = True
-
-    if n % (m+1) == 0:
-        is_computer_turn = False
-    while n > 0:
-
-        if is_computer_turn:
-            jogada = computador_escolhe_jogada(n, m)
-            is_computer_turn = False
-            print("Computador retirou {} peças.".format(jogada))
         else:
-            jogada = usuario_escolhe_jogada(n, m)
-            is_computer_turn = True
-            print("Você retirou {} peças.".format(jogada))
+            jogadaValida = True
 
-        n = n - jogada
-
-        print("Restam apenas {} peças em jogo.\n".format(n))
-
-    if is_computer_turn:
-        print("Você ganhou!")
-        return 1
-    else:
-        print("O computador ganhou!")
-        return 0
+    return jogadorRemove
 
 
 def campeonato():
+    numeroRodada = 1
+    while numeroRodada <= 3:
+        print()
+        print('**** Rodada', numeroRodada, '****')
+        print()
+        partida()
+        numeroRodada += 1
+    print()
+    print('Placar: Você 0 X 3 Computador')
 
-    usuario = 0
-    computador = 0
 
-    for _ in range(3):
+def partida():
+    n = int(input('Quantas peças? '))
 
-        vencedor = partida()
+    m = int(input('Limite de peças por jogada? '))
 
-        if vencedor == 1:
-            usuario = usuario + 1
+    vezDoPC = False
+
+    if n % (m+1) == 0:
+        print()
+        print('Voce começa!')
+
+    else:
+        print()
+        print('Computador começa!')
+        vezDoPC = True
+
+    while n > 0:
+        if vezDoPC:
+            computadorRemove = computador_escolhe_jogada(n, m)
+            n = n - computadorRemove
+            if computadorRemove == 1:
+                print()
+                print('O computador tirou uma peça')
+            else:
+                print()
+                print('O computador tirou', computadorRemove, 'peças')
+
+            vezDoPC = False
         else:
-            computador = computador + 1
+            jogadorRemove = usuario_escolhe_jogada(n, m)
+            n = n - jogadorRemove
+            if jogadorRemove == 1:
+                print()
+                print('Você tirou uma peça')
+            else:
+                print()
+                print('Você tirou', jogadorRemove, 'peças')
+            vezDoPC = True
+        if n == 1:
+            print('Agora resta apenas uma peça no tabuleiro.')
+            print()
+        else:
+            if n != 0:
+                print('Agora restam,', n, 'peças no tabuleiro.')
+                print()
 
-    print("Placar final: Você  {} x {}  Computador".format(usuario, computador))
+    print('Fim do jogo! O computador ganhou!')
 
 
-def main(x):
-    while True:
-        if x == 1:
-            print("Você escolheu uma partida Isolada!")
-            partida()
-            break
-        if x == 2:
-            print("Voce escolheu um campeonato!")
-            campeonato()
-            break
-        if x != 1 or x != 2:
-            print("Essa opção não é válida!")
-            x = int(input(
-                "Bem-vindo ao jogo do NIM! Escolha: \n \n 1 - para jogar uma partida isolada \n 2 - para jogar um campeonato "))
+print('Bem-vindo ao jogo do NIM! Escolha:')
+print()
 
+print('1 - para jogar uma partida isolada')
 
-x = int(input("Bem-vindo ao jogo do NIM! Escolha: \n \n 1 - para jogar uma partida isolada \n 2 - para jogar um campeonato "))
-print("")
-main(x)
+tipoDePartida = int(input('2 - para jogar um campeonato '))
+
+if tipoDePartida == 2:
+    print()
+    print('Voce escolheu um campeonato!')
+    print()
+    campeonato()
+else:
+    if tipoDePartida == 1:
+        print()
+        partida()
