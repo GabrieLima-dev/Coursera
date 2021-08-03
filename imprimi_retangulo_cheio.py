@@ -6,7 +6,7 @@ coluna = 0
 
 while linha < y:
     while coluna < x:
-        print("#", end=" ")
+        print("#", end="")
         coluna = coluna + 1
     print()
 
