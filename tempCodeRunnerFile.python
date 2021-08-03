@@ -1,5 +1,0 @@
-flores = ["margarida", "rosa", "tulipa", "cravo"]
-
-flores[-1] = "girassol"
-
-print(flores)
